@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<slave>
+  <description></description>
+  <remoteFS>/var/lib/jenkins/workspace</remoteFS>
+  <numExecutors>5</numExecutors>
+  <mode>NORMAL</mode>
+  <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
+  <label></label>
+  <nodeProperties/>
+  <userId>anonymous</userId>
+</slave>

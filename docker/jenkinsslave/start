@@ -1,0 +1,7 @@
+#!/bin/bash
+
+: ${SLAVE_NAME=`hostname`}
+curl -O -k ${JENKINS_HOST}/jnlpJars/jenkins-cli.jar
+curl -O -k ${JENKINS_HOST}/jnlpJars/slave.jar
+java -jar jenkins-cli.jar -s http://${JENKINS_HOST} create-node $SLAVE_NAME < config_slave.xml
+java -jar slave.jar -jnlpUrl http://${JENKINS_HOST}/computer/${SLAVE_NAME}/slave-agent.jnlp
