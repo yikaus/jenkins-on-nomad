@@ -37,3 +37,11 @@ variable "asg_max" {
 variable "asg_desired" {
   description = "Desired numbers of servers in ASG"
 }
+
+variable "server_ip" {
+  description = "static ip for server"
+}
+
+variable "my_ip" {
+  description = "my static ip"
+}

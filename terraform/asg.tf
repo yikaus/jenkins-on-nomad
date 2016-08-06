@@ -28,11 +28,19 @@ data "template_file" "init" {
     }
 }
 
+data "template_file" "client" {
+    template = "${file("client.tpl")}"
+    vars {
+        region = "${var.aws_region}"
+        server_ip = "${var.server_ip}"
+    }
+}
+
+
 data "template_cloudinit_config" "config" {
   gzip          = true
   base64_encode = true
 
-  # Setup hello world script to be called by the cloud-config
   part {
     content_type = "text/x-shellscript"
     content      = "${data.template_file.init.rendered}"
@@ -40,13 +48,15 @@ data "template_cloudinit_config" "config" {
 
   part {
     content_type = "text/x-shellscript"
-    content      = "baz"
+    content      = "${data.template_file.client.rendered}"
   }
 
+/*  
   part {
     content_type = "text/x-shellscript"
-    content      = "ffbaz"
+    content      = "${file("example.sh")}"
   }
+*/
 }
 
 resource "aws_launch_configuration" "jenkins-lc" {
@@ -70,15 +80,15 @@ resource "aws_security_group" "jenkins_sg" {
     from_port = 22
     to_port = 22
     protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${var.my_ip}"]
   }
 
   # HTTP access from anywhere
   ingress {
-    from_port = 8080
-    to_port = 8080
+    from_port = 8000
+    to_port = 9000
     protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${var.my_ip}"]
   }
   
   ingress {
