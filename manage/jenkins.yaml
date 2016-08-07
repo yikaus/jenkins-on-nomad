@@ -1,0 +1,15 @@
+---
+- hosts: all
+  remote_user: admin
+  tasks:
+  - name: Ensure Jenkins server started
+    docker_container:
+      name: jenkinsserver
+      image: jeknins:alpine
+      state: started
+      restart: yes
+      volumes:
+       - "/efs/jenkins:/var/jenkins_home"
+      ports:
+       - "8080:8080"
+       - "50000:50000"

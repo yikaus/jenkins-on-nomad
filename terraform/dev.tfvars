@@ -11,4 +11,4 @@ asg_max = "2"
 asg_desired = "1"
 server_ip = "172.31.0.2"
 #get my ip : dig +short myip.opendns.com @resolver1.opendns.com
-my_ip = "118.209.165.204"
+my_ip = "118.209.165.204/32"

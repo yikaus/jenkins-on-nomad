@@ -1,4 +1,6 @@
-## Build a jenkins ci  more like circleci
+### Developing , don't use
+
+## Build a jenkins ci  on nomad docker scheduler
 
 Non-OOTB solution , help you to understand how to build a tiny cluster stack over the cloud. 
 
