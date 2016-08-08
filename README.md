@@ -1,7 +1,7 @@
 
 ## Build a jenkins ci  on nomad docker scheduler
 
-Non-OOTB solution , help you to understand how to build a tiny cluster stack over the cloud. 
+Non-OOTB solution , help you to understand how to build a tiny cluster stack over the cloud. Many examples demostrate the terraform , cloudinit and ansible usage.
 
 
 ### Stack 
@@ -19,7 +19,7 @@ Terraform provision AWS ASG + EFS
 1 Autoscale group for jenkins slaves /nomad client
 ```
 
-### Usage
+### Instructions
 
 Requirement
 ```

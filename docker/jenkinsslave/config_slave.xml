@@ -2,7 +2,7 @@
 <slave>
   <description></description>
   <remoteFS>/var/lib/jenkins/workspace</remoteFS>
-  <numExecutors>5</numExecutors>
+  <numExecutors>1</numExecutors>
   <mode>NORMAL</mode>
   <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
   <label></label>
