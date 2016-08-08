@@ -1,6 +1,6 @@
 #!/bin/bash -v
 
-#enable consul and nomad
+#enable nomad
 curl -sSL https://releases.hashicorp.com/nomad/0.4.0/nomad_0.4.0_linux_amd64.zip -o /tmp/nomad.zip
 unzip /tmp/nomad.zip -d /usr/bin
 

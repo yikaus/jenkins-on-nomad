@@ -15,8 +15,12 @@ Terraform provision AWS ASG + EFS
 ```
 1 VPC
 1 Security group
+1 EFS with multiple target across zone 
 1 EC2 instance for jenkins server / nomad server
 1 Autoscale group for jenkins slaves /nomad client
+1 AMI ami-116d857a, debian jessie
+Jenkins 2.7
+Nomad 0.4.0 
 ```
 
 ### Instructions
