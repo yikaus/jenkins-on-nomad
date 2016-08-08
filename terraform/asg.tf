@@ -1,62 +1,20 @@
 # Specify the provider and access details
-provider "aws" {
-  region = "${var.aws_region}"
-}
-
 
 resource "aws_autoscaling_group" "jenkins-asg" {
   #availability_zones = ["${split(",", var.availability_zones)}"]
+  depends_on = ["aws_instance.server"]
   name = "jenkins-asg"
   max_size = "${var.asg_max}"
   min_size = "${var.asg_min}"
   desired_capacity = "${var.asg_desired}"
   force_delete = true
   launch_configuration = "${aws_launch_configuration.jenkins-lc.name}"
-  vpc_zone_identifier = ["${split(",", var.availability_zones)}"]
+  vpc_zone_identifier = ["${aws_subnet.public-subnet.*.id}"]
   tag {
     key = "Name"
     value = "jenkins-host"
     propagate_at_launch = "true"
   }
-}
-
-
-data "template_file" "init" {
-    template = "${file("init.tpl")}"
-    vars {
-        efs_id = "${aws_efs_file_system.myefs.id}"
-    }
-}
-
-data "template_file" "client" {
-    template = "${file("client.tpl")}"
-    vars {
-        region = "${var.aws_region}"
-        server_ip = "${var.server_ip}"
-    }
-}
-
-
-data "template_cloudinit_config" "config" {
-  gzip          = true
-  base64_encode = true
-
-  part {
-    content_type = "text/x-shellscript"
-    content      = "${data.template_file.init.rendered}"
-  }
-
-  part {
-    content_type = "text/x-shellscript"
-    content      = "${data.template_file.client.rendered}"
-  }
-
-/*  
-  part {
-    content_type = "text/x-shellscript"
-    content      = "${file("example.sh")}"
-  }
-*/
 }
 
 resource "aws_launch_configuration" "jenkins-lc" {
@@ -69,40 +27,3 @@ resource "aws_launch_configuration" "jenkins-lc" {
   key_name = "${var.key_name}"
 }
 
-# Our default security group to access
-# the instances over SSH and HTTP
-resource "aws_security_group" "jenkins_sg" {
-  name = "jenkins_sg"
-  description = "Used in the terraform"
-
-  # SSH access from anywhere
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["${var.my_ip}"]
-  }
-
-  # HTTP access from anywhere
-  ingress {
-    from_port = 8000
-    to_port = 9000
-    protocol = "tcp"
-    cidr_blocks = ["${var.my_ip}"]
-  }
-  
-  ingress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["192.168.0.0/24"]
-  }
-
-  # outbound internet access
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}

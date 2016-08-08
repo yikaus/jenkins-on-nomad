@@ -19,18 +19,8 @@ job "ciworker" {
 			config {
 				image = "yikaus/jenkinsslave"
 			}
-			service {
-				name = "${TASKGROUP}-jenkins-slave"
-				tags = ["global", "ci"]
-				check {
-					name = "alive"
-					type = "tcp"
-					interval = "10s"
-					timeout = "2s"
-				}
-			}
 			env {
-				JENKINS_HOST = "172.31.0.2:8080"
+				JENKINS_HOST = "172.31.0.10:8080"
 			}
 			resources {
 				cpu = 1024 # 1024 Mhz

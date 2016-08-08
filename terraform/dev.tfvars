@@ -9,6 +9,6 @@ instance_type = "t2.micro"
 asg_min = "1"
 asg_max = "2"
 asg_desired = "1"
-server_ip = "172.31.0.2"
+server_ip = "172.31.0.10"
 #get my ip : dig +short myip.opendns.com @resolver1.opendns.com
 my_ip = "<modify ip here>/32"

@@ -1,25 +1,4 @@
 
-data "template_file" "server" {
-    template = "${file("server.tpl")}"
-    vars {
-        region = "${var.aws_region}"
-    }
-}
-
-data "template_cloudinit_config" "serverconfig" {
-  gzip          = true
-  base64_encode = true
-
-  part {
-    content_type = "text/x-shellscript"
-    content      = "${data.template_file.init.rendered}"
-  }
-  part {
-    content_type = "text/x-shellscript"
-    content      = "${data.template_file.server.rendered}"
-  }
-}
-
 resource "aws_instance" "server" {
   instance_type = "${var.instance_type}"
   ami = "${lookup(var.aws_amis, var.aws_region)}"

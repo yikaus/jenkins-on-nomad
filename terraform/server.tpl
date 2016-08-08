@@ -16,10 +16,6 @@ server {
     enabled = true
     bootstrap_expect = 1
 }
-client {
-	enabled = true
-	servers = ["$private_ip:4647"]
-}
 EOF
 
 cat <<EOF > /lib/systemd/system/nomad.service

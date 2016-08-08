@@ -1,11 +1,23 @@
 ---
 - hosts: all
   remote_user: admin
+  gather_facts: no
+  sudo: yes
   tasks:
+    
+  - name: install pip
+    shell: curl https://bootstrap.pypa.io/get-pip.py | python
+    
+  - name: install docker py
+    pip: name=docker-py state=present
+    
+  - name: Ensure Jenkins home created in efs
+    file: path=/efs/jenkins state=directory owner=admin mode=0755
+      
   - name: Ensure Jenkins server started
     docker_container:
       name: jenkinsserver
-      image: jeknins:alpine
+      image: jenkins:alpine
       state: started
       restart: yes
       volumes:
