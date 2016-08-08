@@ -67,6 +67,11 @@ you should able to see new machine from Build Executor Status of jenkins
 To increase/decrease slave numbers , just edit count number in jenkins-slave.nomad then rerun the job `nomad run jenkins-slave.nomad`
 
 
+#### Why not putting jenkins server into nomad cluster
+1. Nomad not support volume map for its docker driver , in this example jenkins need volume map to efs drive.
+2. Jenkins is not lightweight , 200MB+ even with alpine.
+3. With EFS and docker , jenkins server recover can be done within a few seconds . my example using ansible to do that . There are also other solution might be consider , like call plain shell via raw driver of Nomad .   
+4. If do so we might need add consul to located the service . 
 
 ### License
 MIT.
