@@ -1,5 +1,5 @@
 *.local*
 *.tfstate*
 *.tfstate.backup*
-.vars
-.tfvars
+*.vars
+*.tfvars
