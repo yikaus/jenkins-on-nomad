@@ -71,6 +71,12 @@ you should able to see new machine from Build Executor Status of jenkins
 To increase/decrease slave numbers , just edit count number in jenkins-slave.nomad then rerun the job `nomad run jenkins-slave.nomad`
 
 
+### Clean/remove all
+```
+cd terraform
+terraform destroy -var-file=dev.tfvars
+```
+
 #### Why not putting jenkins server into nomad cluster
 1. Nomad not support volume map for its docker driver , in this example jenkins need volume map to efs drive.
 2. Jenkins is not lightweight , 200MB+ even with alpine.
