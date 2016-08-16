@@ -3,17 +3,32 @@
   remote_user: admin
   gather_facts: no
   sudo: yes
+  vars_files: 
+    - jenkins.vars
   tasks:
-    
   - name: install pip
-    shell: curl https://bootstrap.pypa.io/get-pip.py | python
+    shell: which pip || curl https://bootstrap.pypa.io/get-pip.py | python
     
   - name: install docker py
-    pip: name=docker-py state=present
+    pip: name={{item}} state=present
+    with_items:
+      - docker-py
+      - awscli
     
   - name: Ensure Jenkins home created in efs
     file: path=/efs/jenkins state=directory owner=admin mode=0755
-      
+  
+  - name: download server backup
+    command: aws s3 sync s3://{{bucket_name}}/{{backup_folder}} /efs/jenkins
+    # no_log: True
+    environment:
+      AWS_ACCESS_KEY_ID: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+      AWS_SECRET_ACCESS_KEY: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+    ignore_errors: yes
+  
+  - name: Ensure Jenkins permission 
+    file: path=/efs/jenkins state=directory owner=admin mode=0755 recurse=yes
+            
   - name: Ensure Jenkins server started
     docker_container:
       name: jenkinsserver

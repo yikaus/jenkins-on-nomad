@@ -1,0 +1,2 @@
+bucket_name: <your_backup_bucket_name>
+backup_folder: jenkins

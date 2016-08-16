@@ -35,7 +35,7 @@ Create aws access key and config aws env variable , please terraform aws config
 
 Created aws resource , installed/configured  nomad and docker through userdata
 
-Edit reqiured variable in dev.tfvars file
+Create reqiured variable in dev.tfvars based on dev.tfvars.example file
 ```
 cd /terraform
 terraform plan -var-file=dev.tfvars
@@ -44,7 +44,11 @@ terraform apply -var-file=dev.tfvars
 
 Start jenkins server from docker
 
+Create reqiured variable in jenkins.vars based on jenkins.vars.example file
+
 ```
+export AWS_ACCESS_KEY_ID=....your key
+export AWS_SECRET_ACCESS_KEY=... your secret...
 cd /manage
 ./jenkins.sh <server public IP> ~/.ssh/<your ssh key>
 ```

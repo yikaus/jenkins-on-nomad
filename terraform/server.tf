@@ -11,3 +11,7 @@ resource "aws_instance" "server" {
     Name = "server"
   }
 }
+
+output "serverIP"{
+  value = "${aws_instance.server.public_ip}"
+}

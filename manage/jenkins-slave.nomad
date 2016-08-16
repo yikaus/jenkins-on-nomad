@@ -24,7 +24,7 @@ job "ciworker" {
 			}
 			resources {
 				cpu = 1024 # 1024 Mhz
-				memory = 512 # 512MB
+				memory = 200 # 200MB
 				network {
 					mbits = 10
 				}
